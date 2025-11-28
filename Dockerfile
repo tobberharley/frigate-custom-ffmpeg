@@ -1,5 +1,5 @@
 # Base on official Frigate image (adjust tag to match your Frigate version)
-FROM ghcr.io/blakeblackshear/frigate:latest
+FROM ghcr.io/blakeblackshear/frigate
 
 # Just as documentation: this is an arm64 build on a Pi 5
 # Frigate images are already multi-arch, so this will resolve to arm64v8.
