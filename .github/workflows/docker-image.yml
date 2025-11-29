@@ -22,6 +22,6 @@ jobs:
         run: |
           docker buildx build \
             --platform linux/arm64 \
-            -f frigate.dockerfile \
+            -f Dockerfile \
             -t frigate-custom:latest \
             .
