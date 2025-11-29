@@ -29,8 +29,6 @@ RUN ./configure \
 
 FROM ghcr.io/blakeblackshear/frigate:stable
 
-# Install libv4l2 and friends inside the container
-#RUN apt-get update && apt-get install -y --no-install-recommends libv4l-0 &&  rm -rf /var/lib/apt/lists/*
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
@@ -42,8 +40,8 @@ RUN apt-get update && \
     libx265-dev && \
     rm -rf /var/lib/apt/lists/*
 
-COPY --from=build-ffmpeg /usr/local/ffmpeg /usr/bin/ffmpeg
-COPY --from=build-ffmpeg /usr/local/ffprobe /usr/bin/ffprobe
+COPY --from=build-ffmpeg /usr/local/bin/ffmpeg /usr/bin/ffmpeg
+COPY --from=build-ffmpeg /usr/local/bin/ffprobe /usr/bin/ffprobe
 
 # Copy in your custom ffmpeg/ffprobe
 # COPY /usr/local/bin/custom-ffmpeg  /usr/local/bin/
