@@ -6,22 +6,44 @@ on:
   pull_request:
     branches: [ "main" ]
 
+permissions:
+  contents: read
+  packages: write
+
 jobs:
   build:
-    # Kører på GitHubs ARM64 runner (kræver public repo)
     runs-on: ubuntu-24.04-arm
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Set build date tag (ddmmyy)
+        id: vars
+        run: echo "TAG=$(date +'%d%m%y')" >> "$GITHUB_OUTPUT"
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Build Docker image (ARM64)
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push Docker image (ARM64)
         run: |
+          DATE_TAG=${{ steps.vars.outputs.TAG }}
+          REPO=ghcr.io/${{ github.repository }}
+
+          # fx:
+          #   ghcr.io/torbenhinge/<repo>:240125
+          #   ghcr.io/torbenhinge/<repo>:latest
           docker buildx build \
             --platform linux/arm64 \
             -f Dockerfile \
-            -t frigate-custom:latest \
+            -t $REPO:$DATE_TAG \
+            -t $REPO:latest \
+            --push \
             .
