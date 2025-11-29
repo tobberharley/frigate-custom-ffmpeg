@@ -4,7 +4,7 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends \
       ca-certificates \
       build-essential git pkg-config yasm \
-      libdrm-dev libv4l-dev libssl-dev \
+      libdrm-dev libv4l-dev libssl-dev libudev-dev \
       libx264-dev libx265-dev libfreetype6-dev && \
     rm -rf /var/lib/apt/lists/*
 
@@ -36,6 +36,7 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends \
     ca-certificates \
     libv4l-dev \
+    libudev-dev \
     libjpeg-dev \
     libx264-dev \
     libx265-dev && \
