@@ -28,5 +28,5 @@ This setup ensures optimal hardware acceleration and reduced CPU usage for HEVC 
 1. **Clone this repository**
 
 ```bash
-git clone https://github.com/yourusername/frigate-custom-ffmpeg.git
+git clone https://github.com/torbenhinge/frigate-custom-ffmpeg.git
 cd frigate-custom-ffmpeg
