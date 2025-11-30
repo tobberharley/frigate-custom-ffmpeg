@@ -1,31 +1,35 @@
-# Custom Frigate Docker Image with FFmpeg Override (Raspberry Pi 5, HEVC Stateful v4)
+# Custom Frigate Docker Image with FFmpeg Override (Pi5 & Ubuntu, HEVC Stateful v4)
 
-This repository contains a **custom Dockerfile** to build a **Frigate** image for the **Raspberry Pi 5**, overriding the default FFmpeg with a **custom HEVC stateful version 4**.  
+This repository provides a **custom Dockerfile** to build a Frigate image that overrides the shipped FFmpeg with a **HEVC stateful v4 build**, for both:
 
-This setup ensures optimal hardware acceleration and reduced CPU usage for HEVC streams.
+- **Raspberry Pi 5 OS (64-bit)**
+- **Ubuntu ARM64 / x86_64** (for testing or other ARM64 boards)
+
+> Since the HEVC stateful driver for Pi5 isn’t in the mainline kernel yet, the custom FFmpeg includes patches and V4L2 driver support.
 
 ---
 
 ## Features
 
-- Custom FFmpeg (HEVC stateful v4)
-- Optimized for Raspberry Pi 5
-- Uses Docker for clean, reproducible builds
-- Full Frigate functionality with custom video processing
+- Custom FFmpeg v4 with HEVC stateful decoding
+- Works on Raspberry Pi 5 & Ubuntu ARM64
+- Hardware acceleration with V4L2
+- Dockerized for reproducible builds
+- Reduced CPU load for multiple HEVC streams
 
 ---
 
 ## Requirements
 
-- Raspberry Pi 5 (64-bit recommended)
-- Docker & Docker Buildx installed
-- Frigate config.yml ready
+- Docker & Docker Buildx
+- `git`, `curl` (for build environment)
+- Frigate configuration ready
 
 ---
 
 ## Build Instructions
 
-1. **Clone this repository**
+### 1. Clone this repository
 
 ```bash
 git clone https://github.com/torbenhinge/frigate-custom-ffmpeg.git
