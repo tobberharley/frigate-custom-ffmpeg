@@ -32,5 +32,5 @@ This repository provides a **custom Dockerfile** to build a Frigate image that o
 ### 1. Clone this repository
 
 ```bash
-git clone https://github.com/torbenhinge/frigate-custom-ffmpeg.git
+git clone https://github.com/tobberharley/frigate-custom-ffmpeg.git
 cd frigate-custom-ffmpeg
