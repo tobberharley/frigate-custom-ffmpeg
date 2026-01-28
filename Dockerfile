@@ -43,12 +43,4 @@ RUN apt-get update && \
 COPY --from=build-ffmpeg /usr/local/bin/ffmpeg /usr/bin/ffmpeg
 COPY --from=build-ffmpeg /usr/local/bin/ffprobe /usr/bin/ffprobe
 
-# Copy in your custom ffmpeg/ffprobe
-# COPY /usr/local/bin/custom-ffmpeg  /usr/local/bin/
-
-# RUN chmod +x /usr/local/bin/ffmpeg /usr/local/bin/ffprobe && \
-#    /usr/local/bin/ffmpeg -version || true
-
-
-# 
-# docker buildx build --platform linux/arm64 -f frigate.dockerfile -t torbenhinge/frigate:custom-ffmpeg-0.14.1 .
+# docker buildx build --platform linux/arm64 -f frigate.dockerfile -t torbenhinge/frigate:custom-ffmpeg .
