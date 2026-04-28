@@ -13,7 +13,8 @@ permissions:
 
 jobs:
   build:
-    runs-on: ubuntu-24.04-arm
+    runs-on: ubuntu-latest
+    # ubuntu-24.04-arm
 
     steps:
       - name: Checkout
@@ -42,7 +43,7 @@ jobs:
           #   ghcr.io/torbenhinge/<repo>:240125
           #   ghcr.io/torbenhinge/<repo>:latest
           docker buildx build \
-            --platform linux/arm64 \
+            --platform linux/amd64,linux/arm64 \
             -f Dockerfile \
             -t $REPO:$DATE_TAG \
             -t $REPO:latest \
