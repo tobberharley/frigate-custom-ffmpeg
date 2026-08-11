@@ -2,33 +2,35 @@ FROM debian:bookworm-slim AS build-ffmpeg
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-      ca-certificates \
-      build-essential git pkg-config yasm \
-      libdrm-dev libv4l-dev libssl-dev libudev-dev \
-      libx264-dev libx265-dev libfreetype6-dev && \
+    ca-certificates \
+    build-essential git pkg-config yasm \
+    libdrm-dev libv4l-dev libssl-dev libudev-dev \
+    libx264-dev libx265-dev libfreetype6-dev && \
     rm -rf /var/lib/apt/lists/*
 
 WORKDIR /build
 
-RUN git clone --branch dev/5.1.6/sandm_1 --depth 1 https://github.com/jc-kynesim/rpi-ffmpeg.git ffmpeg
+RUN git clone \
+    --branch test/7.1.5/main \
+    --depth 1 \
+    https://github.com/jc-kynesim/rpi-ffmpeg.git ffmpeg
 
 WORKDIR /build/ffmpeg
 
 RUN ./configure \
-      --prefix=/usr/local \
-      --enable-gpl \
-      --enable-libdrm \
-      --enable-libv4l2 \
-      --enable-v4l2-request \
-      --enable-libx264 \
-      --enable-libx265 \
-      --enable-libfreetype \
-      --disable-debug && \
+    --prefix=/usr/local \
+    --enable-gpl \
+    --enable-libdrm \
+    --enable-libv4l2 \
+    --enable-v4l2-request \
+    --enable-libx264 \
+    --enable-libx265 \
+    --enable-libfreetype \
+    --disable-debug && \
     make -j$(nproc) && \
     make install
 
 FROM ghcr.io/blakeblackshear/frigate:stable
-
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
