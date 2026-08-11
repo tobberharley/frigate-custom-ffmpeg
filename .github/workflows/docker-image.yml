@@ -2,27 +2,41 @@ name: Docker Image CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
-  workflow_dispatch: 
+    branches: ["main"]
+  workflow_dispatch:
 
 permissions:
   contents: read
   packages: write
 
+env:
+  FFMPEG_BRANCH: test/8.1.2/main
+
 jobs:
   build:
     runs-on: ubuntu-latest
-    # ubuntu-24.04-arm
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set build date tag (ddmmyy)
-        id: vars
-        run: echo "TAG=$(date +'%d%m%y')" >> "$GITHUB_OUTPUT"
+      - name: Get FFmpeg release
+        id: ffmpeg
+        run: |
+          git clone \
+            --branch "$FFMPEG_BRANCH" \
+            --depth 1 \
+            https://github.com/jc-kynesim/rpi-ffmpeg.git \
+            /tmp/rpi-ffmpeg
+
+          RELEASE=$(cat /tmp/rpi-ffmpeg/RELEASE)
+
+          echo "FFmpeg branch:  $FFMPEG_BRANCH"
+          echo "FFmpeg release: $RELEASE"
+
+          echo "release=$RELEASE" >> "$GITHUB_OUTPUT"
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -34,18 +48,17 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and push Docker image (ARM64)
+      - name: Build and push Docker image
+        env:
+          RELEASE: ${{ steps.ffmpeg.outputs.release }}
         run: |
-          DATE_TAG=${{ steps.vars.outputs.TAG }}
-          REPO=ghcr.io/${{ github.repository }}
+          REPO="ghcr.io/${{ github.repository }}"
 
-          # fx:
-          #   ghcr.io/torbenhinge/<repo>:240125
-          #   ghcr.io/torbenhinge/<repo>:latest
           docker buildx build \
             --platform linux/amd64,linux/arm64 \
+            --build-arg FFMPEG_BRANCH="$FFMPEG_BRANCH" \
             -f Dockerfile \
-            -t $REPO:$DATE_TAG \
-            -t $REPO:latest \
+            -t "$REPO:$RELEASE" \
+            -t "$REPO:latest" \
             --push \
             .
