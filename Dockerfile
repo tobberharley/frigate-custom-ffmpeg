@@ -11,7 +11,7 @@ RUN apt-get update && \
 WORKDIR /build
 
 RUN git clone \
-    --branch test/7.1.5/main \
+    --branch test/8.1.2/main \
     --depth 1 \
     https://github.com/jc-kynesim/rpi-ffmpeg.git ffmpeg
 
