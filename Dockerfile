@@ -3,7 +3,7 @@ FROM debian:bookworm-slim AS build-ffmpeg
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
     ca-certificates \
-    build-essential git pkg-config yasm \
+    build-essential git pkg-config yasm nasm \
     libdrm-dev libv4l-dev libssl-dev libudev-dev \
     libx264-dev libx265-dev libfreetype6-dev && \
     rm -rf /var/lib/apt/lists/*
