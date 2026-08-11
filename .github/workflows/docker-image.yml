@@ -9,7 +9,7 @@ on:
       ffmpeg_branch:
         description: "FFmpeg branch"
         required: true
-        default: "test/7.1.5/main"
+        default: "test/8.1.2/main"
         type: string
 
 permissions:
