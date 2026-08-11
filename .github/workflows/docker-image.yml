@@ -3,9 +3,14 @@ name: Docker Image CI
 on:
   push:
     branches: ["main"]
-  pull_request:
-    branches: ["main"]
+    
   workflow_dispatch:
+    inputs:
+      ffmpeg_branch:
+        description: "FFmpeg branch"
+        required: true
+        default: "test/7.1.5/main"
+        type: string
 
 permissions:
   contents: read
