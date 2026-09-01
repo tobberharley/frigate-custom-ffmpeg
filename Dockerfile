@@ -35,7 +35,7 @@ RUN ./configure \
     make -j"$(nproc)" && \
     make install
 
-FROM ghcr.io/blakeblackshear/frigate:stable
+FROM ghcr.io/blakeblackshear/frigate:stable-rocm
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
