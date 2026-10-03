@@ -36,7 +36,7 @@ jobs:
 
       - name: Build and push Docker image (ARM64)
         run: |
-          DATE_TAG=${{ steps.vars.outputs.TAG }}
+          DATE_TAG=pi5-${{ steps.vars.outputs.TAG }}
           REPO=ghcr.io/${{ github.repository }}
 
           # fx:
